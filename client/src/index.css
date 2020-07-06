@@ -43,6 +43,7 @@ a {
   cursor:pointer;
 }
 .btn {
+  font-family: 'Poppins', sans-serif;
   display: inline-block;
   margin-bottom: 0;
   margin:5px;
