@@ -22,7 +22,7 @@ function LogoutUser(){
 
   }
   return (
-    <a className="NavItem" onClick={redirectToLogin}>Logout</a>
+    <a className="NavItem" style={{padding: '10px'}} onClick={redirectToLogin}>Logout</a>
   )
 }
 

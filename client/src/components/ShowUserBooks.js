@@ -1,5 +1,4 @@
-import React, {Component}  from 'react';
-import UserHome from "./UserHome";
+import React from 'react';
 import BookGrid from "./grid/BookGrid";
 import BookCard from "./grid/BookCard";
 

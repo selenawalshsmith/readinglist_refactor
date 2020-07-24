@@ -1,13 +1,6 @@
-import React, {Component,  KeyboardEvent}  from 'react';
+import React, {Component}  from 'react';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
-import BookGrid from "./grid/BookGrid";
-import BookCard from "./grid/BookCard";
-import Search from "./Search";
-import getBooks from "./../actions/getBooks";
 import ShowUserBooks from "./ShowUserBooks";
-import {isEmpty} from 'lodash';
-import PropTypes from 'prop-types'
 import jwt_decode from "jwt-decode";
 
 class UserHome extends Component{

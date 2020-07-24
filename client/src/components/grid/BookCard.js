@@ -6,10 +6,6 @@ import './card.css';
 
 
 class BookCard extends Component {
-  constructor(props) {
-    super(props);
-    //this.onClick = this.onClick.bind(this);
-  }
   saveBook=(id)=>{
     this.props.saveBook(this.props.id);
 

@@ -3,8 +3,8 @@ import axios from 'axios';
 import BookGrid from "./grid/BookGrid";
 import BookCard from "./grid/BookCard";
 import Search from './Search';
-
 import jwt_decode from "jwt-decode";
+import "../App.css";
 
 class Explore extends Component{
   constructor(props) {
@@ -48,11 +48,11 @@ class Explore extends Component{
     } else {
       this.props.history.push("/login");
     }
-  }
-  saveBook = (bookID) => {
-    console.log(bookID)
+ }
+ saveBook = (bookID) => {
+    console.log(bookID);
     this.state.myBooks.map((book)=>{
-      if(book.id == bookID){
+      if(book.id === bookID){
         console.log("success");
         const jsonBook= JSON.stringify(book);
         axios.post("/api/users/addBook", {email: this.state.user, book: jsonBook})
@@ -60,7 +60,7 @@ class Explore extends Component{
           console.log(response);
         }).catch(err => {console.log(err);});
       }
-    })
+   })
     /*
     axios.post("/api/users/addBook", {email: this.state.user, book: bookID})
     .then((response) => {
@@ -77,12 +77,24 @@ class Explore extends Component{
             console.log(responsedata.items);
             const bookList = [];
             for(var i=0; i < responsedata.items.length; i++){
+              let bookImgThumbnailUrl;
+              let bookImgThumbnail;
+              //console.log(responsedata.items[i].volumeInfo.imageLinks.thumbnail);
+              if (responsedata.items[i].volumeInfo.imageLinks.thumbnail === undefined){
+                bookImgThumbnail = "../../../public/noimageavailable.png";
+              } else {
+                bookImgThumbnailUrl = responsedata.items[i].volumeInfo.imageLinks.thumbnail;
+                bookImgThumbnailUrl = bookImgThumbnailUrl.slice(4);
+                bookImgThumbnail = "https"+bookImgThumbnailUrl;
+                }
+              //console.log(bookImgThumbnail);
               const bookItem = {
                 id: responsedata.items[i].id,
                 title: responsedata.items[i].volumeInfo.title,
                 author: responsedata.items[i].volumeInfo.authors,
                 description: responsedata.items[i].volumeInfo.description,
-                img: responsedata.items[i].volumeInfo.imageLinks.thumbnail
+                //img: responsedata.items[i].volumeInfo.imageLinks.thumbnail
+                img: bookImgThumbnail
               }
               bookList.push(bookItem);
             }
@@ -96,16 +108,20 @@ class Explore extends Component{
   }
   render (){
     return (
-      <div className="container">
-        <Search performSearch={this.performSearch} searchQuery={this.state.searchQuery}/>
-        <h1> Hello {this.state.user}</h1>
-        <h2>Search for books</h2>
-        <BookGrid cols={3}>
-        {
-          this.state.myBooks.map((bookItem, i) => (
-            <BookCard saveBook={this.saveBook} title={bookItem.title} id={bookItem.id} author={bookItem.author} img={bookItem.img} description={bookItem.description} key={i} addBook={this.state.addBook}/>
-          ))}
-        </BookGrid>
+      <div id="wrapper">
+        <div id="content">
+          <div className="container">
+            <Search performSearch={this.performSearch} searchQuery={this.state.searchQuery}/>
+            <h1> Hello {this.state.user}</h1>
+            <h2>Search for books</h2>
+            <BookGrid cols={3}>
+            {
+              this.state.myBooks.map((bookItem, i) => (
+                <BookCard saveBook={this.saveBook} title={bookItem.title} id={bookItem.id} author={bookItem.author} img={bookItem.img} description={bookItem.description} key={i} addBook={this.state.addBook}/>
+              ))}
+            </BookGrid>
+          </div>
+        </div>
       </div>
     )
   }

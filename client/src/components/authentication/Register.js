@@ -1,8 +1,6 @@
 import React, {Component}  from 'react';
 //import {registerUser} from "../../actions/registerUser";
-import PropTypes from "prop-types";
 import axios from "axios";
-import classnames from "classnames";
 import "../../App.css";
 
 class Register extends Component{

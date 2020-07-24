@@ -1,7 +1,5 @@
 import React, {Component}  from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import setAuthToken from "../../actions/setAuthToken";
-import { useHistory } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import LogoutUser from '../LogoutUser.js'
 import "../../App.css";
 //import { Link } from 'react-router-dom'; //add links for pages
@@ -10,44 +8,41 @@ import "../../App.css";
 <Link to={{pathname:"/explore", state:{user: this.state.user}}}><button>Explore</button></Link>
 */
 class Nav extends Component{
-  constructor(props) {
-    super(props);
-    //this.state= {
-    //  redirect: null
-    //}
+  hideItems(){
+    if (localStorage.jwtToken) {
+      console.log("token found");
+      var loginElem = document.getElementById('login');
+      loginElem.classList.add('hide-nav-items');
+      var registerElem = document.getElementById('register');
+      registerElem.classList.add('hide-nav-items');
+    } else {
+      //this.props.history.push("/login");
+    }
   }
-
-
+  compomonentDidMount(){
+    this.hideItems();
+  }
   render(){
     return (
       <div>
-        <header style={headerStyle}>
-          <div className="NavItemContainer">
-          <ul>
-            <li>
-              <Link to='/'>
-                <h1>Reading List</h1>
-              </Link>
-            </li>
-
-            <li>
-            <Link to='/register'><a className="NavItem">Register</a></Link>
-            </li>
-            <li>
-            <Link to='/login'><a className="NavItem">Login</a></Link>
-            </li>
-            <li>
-            <LogoutUser/>
-            </li>
-            <li>
-            <Link to="/explore"><a className="NavItem">Explore</a></Link>
-            </li>
-            <li>
-            <Link to="/"><a className="NavItem">Home</a></Link>
-            </li>
-          </ul>
-          </div>
-        </header>
+        <div className="navbar-wrapper">
+          <header style={headerStyle}>
+            <div className="NavItemContainer">
+                <Link to='/'>
+                  <h1>Reading List</h1>
+                </Link>
+              <ul>
+                <div style={{float: 'right'}}>
+                  <Link to='/register' style={{padding: '10px'}} id="register">Register</Link>
+                  <Link to='/login' style={{padding: '10px'}} id="login">Login</Link>
+                  <LogoutUser/>
+                  <Link to="/explore" style={{padding: '10px'}} >Explore</Link>
+                  <Link to="/" style={{padding: '10px'}}>Home</Link>
+                </div>
+            </ul>
+            </div>
+          </header>
+        </div>
       </div>
     )
   }
@@ -58,9 +53,8 @@ const headerStyle ={
   textAlign: 'left',
   padding: '10px',
   fontSize: '25px',
-  width: '100%'
+  width: '100%',
+  float: 'right'
 }
-const buttonStyle ={
 
-}
 export default Nav;
